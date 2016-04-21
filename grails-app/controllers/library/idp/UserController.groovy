@@ -2,13 +2,12 @@ package library.idp
 
 class UserController {
 
-    UserService userService;
-
+    static allowedMethods = [show: 'GET']
     static responseFormats = ['json']
 
-    static allowedMethods = [index:'GET', show:'GET', save:'POST', update:'PUT', delete:'DELETE']
+    UserService userService;
 
-    def index() {
-        respond userService.getAll()
+    def show(String token) {
+        respond userService.getIfNotExpired(token)
     }
 }

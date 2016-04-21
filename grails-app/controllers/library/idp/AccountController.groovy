@@ -2,14 +2,18 @@ package library.idp
 
 class AccountController {
 
-    static allowedMethods = [index: 'GET', save: 'POST',]
+    static allowedMethods = [update: 'PUT', delete: 'DELETE']
     static responseFormats = ['json']
 
-    def index() {
-        respond Account.list
+    AccountService accountService
+
+    def update(Account account) {
+        accountService.updateIfExists(account)
+        respond []
     }
 
-    def save(Account account) {
-        Account.save(account)
+    def delete(Account account) {
+        accountService.deleteIfExists(account.login)
+        respond []
     }
 }

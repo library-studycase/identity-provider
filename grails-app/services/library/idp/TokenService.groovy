@@ -5,7 +5,13 @@ import grails.transaction.Transactional
 @Transactional
 class TokenService {
 
-    def renew(Credentials credentials) {
-        new Token(value: 'some-random-UUID-value')
+    AccountService accountService;
+
+    UserService userService
+
+    def resetAndGet(Credentials credentials) {
+        def account = accountService.login(credentials)
+        def user = userService.createAndReplace(account)
+        new Token(value: user.token)
     }
 }

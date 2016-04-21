@@ -1,15 +1,13 @@
 package library.idp
 
-import grails.converters.JSON
-
 class TokenController {
 
-    static allowedMethods = [index:'GET', show:'GET', save:'POST', update:'PUT', delete:'DELETE']
+    static allowedMethods = [save: 'POST']
     static responseFormats = ['json']
 
     TokenService tokenService;
 
     def save(Credentials credentials) {
-        respond tokenService.renew(credentials)
+        respond tokenService.resetAndGet(credentials)
     }
 }

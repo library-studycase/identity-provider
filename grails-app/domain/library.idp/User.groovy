@@ -1,6 +1,6 @@
 package library.idp
 
-class Account {
+class User {
 
     Integer nativeId
 
@@ -9,4 +9,7 @@ class Account {
 
     Date registered
     Date lastModified
+    Date lastActed
+
+    String token
 }
