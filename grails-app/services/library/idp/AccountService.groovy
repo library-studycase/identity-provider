@@ -1,5 +1,8 @@
 package library.idp
 
+import com.tsystems.dfmg.studies.library.datasource.domain.LibraryPort
+import com.tsystems.dfmg.studies.library.datasource.domain.LibraryPortService
+import com.tsystems.dfmg.studies.library.datasource.domain.ReadUserBisRequest
 import grails.transaction.Transactional
 
 @Transactional
@@ -7,9 +10,23 @@ class AccountService {
 
     UserService userService
 
+    LibraryPort backend = new LibraryPortService().getLibraryPortSoap11()
+
     def login(Credentials credentials) {
-        def account = null // TODO: get an account info from the backend service
-        account.save()
+
+        def response = backend
+                .readUserBis(new ReadUserBisRequest(
+                        login: credentials.login,
+                        password: credentials.password))
+                .userBis
+
+        new Account(
+                    nativeId: response.nativeId,
+                    login: response.login,
+                    roles: response.roles,
+                    registered: response.created,
+                    lastModified: response.lastModified)
+                .save()
     }
 
     def logout(String login) {
@@ -37,4 +54,6 @@ class AccountService {
             userService.deleteIfExists(login)
         }
     }
+
+
 }

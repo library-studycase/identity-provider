@@ -45,6 +45,8 @@ jar {
 }
 
 dependencies {
+
+    compile "com.tsystems.dfmg.studies.library:datasource-auth-client:1.0.0-SNAPSHOT"
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
