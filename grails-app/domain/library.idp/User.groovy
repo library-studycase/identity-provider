@@ -12,4 +12,6 @@ class User {
     Date lastActed
 
     String token
+
+    static transients = ['roles', 'registered', 'lastModified']
 }

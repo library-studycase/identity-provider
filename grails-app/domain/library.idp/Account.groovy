@@ -9,4 +9,6 @@ class Account {
 
     Date registered
     Date lastModified
+
+    static transients = ['roles', 'registered', 'lastModified']
 }

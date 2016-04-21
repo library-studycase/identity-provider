@@ -9,14 +9,20 @@ class UserService {
 
     def createAndReplace(Account account) {
 
-        User.save(new User(
+        deleteIfExists(account.login)
+        
+        def user = new User(
                 login: account.login,
                 nativeId: account.nativeId,
                 roles: account.roles,
                 registered: account.registered,
                 lastModified: account.lastModified,
                 lastActed: new Date(),
-                token: UUID.randomUUID().toString()))
+                token: UUID.randomUUID().toString())
+
+        user.save()
+
+        user
     }
 
     def getIfNotExpired(String token) {
@@ -27,14 +33,16 @@ class UserService {
             throw new IllegalArgumentException("user is missing")
         }
 
-        if (new Date().time() - user.lastActed.time() > 15 * 60 * 1000) {
+        if (new Date().getTime() - user.lastActed.getTime() > 15 * 60 * 1000) {
             user.delete()
             throw new IllegalArgumentException("user is expired")
         }
 
         user.lastActed = new Date()
 
-        User.save(user)
+        user.save()
+
+        user
     }
 
     def updateIfExists(Account updatedAccount) {
