@@ -10,7 +10,7 @@ class UserService {
     def createAndReplace(Account account) {
 
         deleteIfExists(account.login)
-        
+
         def user = new User(
                 login: account.login,
                 nativeId: account.nativeId,
