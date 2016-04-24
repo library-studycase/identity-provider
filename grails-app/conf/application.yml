@@ -107,5 +107,5 @@ grails:
         encoding: UTF-8
 
 server:
-    port: 8080
+    port: 8092
 
